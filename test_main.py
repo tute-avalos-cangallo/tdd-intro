@@ -6,15 +6,15 @@
 # pylint: disable=missing-function-docstring
 import pytest
 import main
-from constantes import TABLAS
+from constantes import DB_TABLES
 
 def test_abrir_conexion_existe():
-    at_main = dir(main)
-    assert 'abrir_conexion' in at_main
+    main_attrs = dir(main)
+    assert 'abrir_conexion' in main_attrs
 
 def test_consulta_generica():
-    at_main = dir(main)
-    assert 'consulta_generica' in at_main
+    main_attrs = dir(main)
+    assert 'consulta_generica' in main_attrs
 
 @pytest.fixture
 def conn_fixture():
@@ -28,7 +28,7 @@ def test_abrir_conexion(conn_fixture):
 
 # O se puede declarar con el decorador @pytest.mark.usefixtures(<fixture>)
 @pytest.mark.usefixtures("conn_fixture")
-@pytest.mark.parametrize('tabla', TABLAS)
+@pytest.mark.parametrize('tabla', DB_TABLES)
 def test_chequear_tabla(tabla):
     resultado = main.consulta_generica(pytest.dbconn, f"SHOW TABLES LIKE '{tabla}'")
     assert len(resultado) == 1
